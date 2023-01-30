@@ -29,6 +29,9 @@ $: npm run build
 
 Run the app:
 ```bash
+$: python3 manage.py makemigrations
+$: python3 manage.py migrate
+$: python3 manage.py loaddata backend/fixtures/seed.json
 $: python3 manage.py runserver
 ```
 
