@@ -1,28 +1,25 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-function Task(): JSX.Element {
-  const [List, setList] = useState<string[]>([]);
-
-  interface Taskdata {
+function Task(props: any): JSX.Element {
+  interface ITask {
     tasks: string[];
   }
 
-  const TaskList = async () => {
-    console.log("rendering");
-    let myResponse = await axios.get<Taskdata>("tasks/");
-    console.log(myResponse);
-    setList(myResponse.data.tasks);
+  const taskList = async () => {
+    let allTasks = await axios.get<ITask>("tasks/");
+    console.log(allTasks);
+    props.setter(allTasks.data.tasks);
   };
 
   useEffect(() => {
-    TaskList();
+    taskList();
   }, []);
 
   return (
     <>
       <p>From the task component</p>
-      {List.map((task) => {
+      {props.list.map((task: string) => {
         return <p>{task}</p>;
       })}
     </>
