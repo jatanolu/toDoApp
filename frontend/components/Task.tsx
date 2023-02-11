@@ -3,14 +3,21 @@ import { useEffect } from "react";
 
 function Task(props: any): JSX.Element {
   interface ITask {
-    tasks: string[];
+    tasks: [id: number, title: string];
   }
 
   const taskList = async () => {
-    let allTasks = await axios.get<ITask>("tasks/");
+    let allTasks = await axios.get<ITask>("getTasks/");
     console.log(allTasks);
-    props.setter(allTasks.data.tasks);
+    props.setList(allTasks.data.tasks);
   };
+
+  useEffect(() => {
+    if (props.Submit) {
+      taskList();
+      props.setSubmit(!props.Submit);
+    }
+  }, [props.Submit]);
 
   useEffect(() => {
     taskList();
@@ -19,8 +26,8 @@ function Task(props: any): JSX.Element {
   return (
     <>
       <p>From the task component</p>
-      {props.list.map((task: string) => {
-        return <p>{task}</p>;
+      {props.List.map((tasks: { id: number; title: string }) => {
+        return <p>{tasks.title}</p>;
       })}
     </>
   );

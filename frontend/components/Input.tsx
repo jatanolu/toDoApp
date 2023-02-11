@@ -1,18 +1,15 @@
 import axios from "axios";
 import { FormEvent, useState } from "react";
 
-function Header(props: any): JSX.Element {
+function Input(props: any): JSX.Element {
   const [newTask, setNewTask] = useState<string>("");
 
-  const getTask = async () => {
-    let allTasks = await axios.get("tasks/");
-    props.setter(allTasks.data.tasks);
-  };
-
   const addTask = async () => {
-    let myResponse = await axios.post("tasks/", { task: newTask });
+    let myResponse = await axios.post("addTask/", { task: newTask });
     console.log(myResponse);
-    getTask();
+    if (myResponse.data.success) {
+      props.setSubmit(true);
+    }
   };
 
   function handleSubmit(e: FormEvent) {
@@ -24,7 +21,7 @@ function Header(props: any): JSX.Element {
 
   return (
     <>
-      <p>From the header component</p>
+      <p>From the Input component</p>
       <form id="taskInput" onSubmit={handleSubmit}>
         <input
           onChange={(event) => {
@@ -40,4 +37,4 @@ function Header(props: any): JSX.Element {
     </>
   );
 }
-export default Header;
+export default Input;
