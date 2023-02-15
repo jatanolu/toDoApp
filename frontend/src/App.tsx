@@ -4,9 +4,14 @@ import Input from "../components/Input.js";
 import { useState } from "react";
 import "./App.css";
 
+export interface ITask {
+  id: number;
+  title: string;
+}
+
 function App(): JSX.Element {
-  const [List, setList] = useState<string[]>([]);
-  const [Submit, setSubmit] = useState<Boolean>(false);
+  const [list, setList] = useState<ITask[]>([]);
+  const [submited, setSubmited] = useState<boolean>(false);
 
   return (
     <>
@@ -14,16 +19,16 @@ function App(): JSX.Element {
       <h1>Hello world</h1>
       <div className="task-box">
         <Input
-          List={List}
+          list={list}
           setList={setList}
-          Submit={Submit}
-          setSubmit={setSubmit}
+          submited={submited}
+          setSubmited={setSubmited}
         />
         <Tasks
-          List={List}
+          list={list}
           setList={setList}
-          Submit={Submit}
-          setSubmit={setSubmit}
+          submited={submited}
+          setSubmited={setSubmited}
         />
       </div>
     </>

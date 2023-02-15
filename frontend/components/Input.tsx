@@ -1,14 +1,19 @@
 import axios from "axios";
 import { FormEvent, useState } from "react";
+import { ITask } from "../src/App";
 
-function Input(props: any): JSX.Element {
+function Input(props: {
+  submited: boolean;
+  setSubmited: (Submit: boolean) => void;
+  list: ITask[];
+  setList: (list: ITask[]) => void;
+}) {
   const [newTask, setNewTask] = useState<string>("");
 
   const addTask = async () => {
     let myResponse = await axios.post("addTask/", { task: newTask });
-    console.log(myResponse);
     if (myResponse.data.success) {
-      props.setSubmit(true);
+      props.setSubmited(true);
     }
   };
 

@@ -1,33 +1,38 @@
 import axios from "axios";
 import { useEffect } from "react";
+import { ITask } from "../src/App";
 
-function Task(props: any): JSX.Element {
-  interface ITask {
-    tasks: [id: number, title: string];
+function Task(props: {
+  submited: boolean;
+  setSubmited: (Submit: boolean) => void;
+  list: ITask[];
+  setList: (list: ITask[]) => void;
+}) {
+  interface Ilist {
+    tasks: ITask[];
   }
 
-  const taskList = async () => {
-    let allTasks = await axios.get<ITask>("getTasks/");
-    console.log(allTasks);
+  const tasklist = async () => {
+    let allTasks = await axios.get<Ilist>("getTasks/");
     props.setList(allTasks.data.tasks);
   };
 
   useEffect(() => {
-    if (props.Submit) {
-      taskList();
-      props.setSubmit(!props.Submit);
+    if (props.submited) {
+      tasklist();
+      props.setSubmited(!props.submited);
     }
-  }, [props.Submit]);
+  }, [props.submited]);
 
   useEffect(() => {
-    taskList();
+    tasklist();
   }, []);
 
   return (
     <>
       <p>From the task component</p>
-      {props.List.map((tasks: { id: number; title: string }) => {
-        return <p>{tasks.title}</p>;
+      {props.list.map((task) => {
+        return <p>{task.title}</p>;
       })}
     </>
   );
