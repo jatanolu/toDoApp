@@ -26,7 +26,7 @@ function Input(props: {
 
   return (
     <>
-      <p>From the Input component</p>
+      <h2>From the Input component</h2>
       <form id="taskInput" onSubmit={handleSubmit}>
         <input
           onChange={(event) => {

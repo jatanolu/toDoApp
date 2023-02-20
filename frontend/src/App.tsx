@@ -7,6 +7,10 @@ import "./App.css";
 export interface ITask {
   id: number;
   title: string;
+  completed: boolean;
+}
+export interface Ilist {
+  tasks: ITask[];
 }
 
 function App(): JSX.Element {

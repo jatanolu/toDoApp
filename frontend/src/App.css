@@ -8,3 +8,10 @@
   border: solid black 3px;
   padding: 1rem;
 }
+.task {
+  display: flex;
+  justify-content: center;
+}
+.checkbox {
+  margin-left: auto;
+}

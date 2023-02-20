@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { ITask } from "../src/App";
+import { ITask, Ilist } from "../src/App";
+import Status from "./Status";
 
 function Task(props: {
   submited: boolean;
@@ -8,12 +9,9 @@ function Task(props: {
   list: ITask[];
   setList: (list: ITask[]) => void;
 }) {
-  interface Ilist {
-    tasks: ITask[];
-  }
-
   const tasklist = async () => {
     let allTasks = await axios.get<Ilist>("getTasks/");
+    console.log(allTasks);
     props.setList(allTasks.data.tasks);
   };
 
@@ -30,10 +28,7 @@ function Task(props: {
 
   return (
     <>
-      <p>From the task component</p>
-      {props.list.map((task) => {
-        return <p>{task.title}</p>;
-      })}
+      <Status {...props} />
     </>
   );
 }
