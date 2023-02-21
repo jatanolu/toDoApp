@@ -23,7 +23,7 @@ def addTask(request):
     return JsonResponse({'success': True})
 
 @api_view(['PUT'])
-def updateTask(request):
+def taskToUpdate(request):
     try:
         updatedTask = Task.objects.get(id=request.data['id'])
         updatedTask.completed = not updatedTask.completed

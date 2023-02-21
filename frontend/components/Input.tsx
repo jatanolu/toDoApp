@@ -3,10 +3,10 @@ import { FormEvent, useState } from "react";
 import { ITask } from "../src/App";
 
 function Input(props: {
-  submited: boolean;
+  submitted: boolean;
   setSubmited: (Submit: boolean) => void;
-  list: ITask[];
-  setList: (list: ITask[]) => void;
+  taskList: ITask[];
+  setTaskList: (taskList: ITask[]) => void;
 }) {
   const [newTask, setNewTask] = useState<string>("");
 

@@ -1,34 +1,44 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { ITask, Ilist } from "../src/App";
-import Status from "./Status";
+import { ItaskList, Iprops } from "../src/App";
+import RenderTask from "./RenderTask";
 
-function Task(props: {
-  submited: boolean;
-  setSubmited: (Submit: boolean) => void;
-  list: ITask[];
-  setList: (list: ITask[]) => void;
-}) {
-  const tasklist = async () => {
-    let allTasks = await axios.get<Ilist>("getTasks/");
-    console.log(allTasks);
-    props.setList(allTasks.data.tasks);
+function Task(props: Iprops) {
+  const tasktaskList = async () => {
+    let allTasks = await axios.get<ItaskList>("getTasks/");
+    props.setTaskList(allTasks.data.tasks);
   };
-
+  async function handleChange(id: number) {
+    await axios.put<ItaskList>("taskToUpdate/", {
+      id: id,
+    });
+    props.setSubmited(!props.submitted);
+  }
   useEffect(() => {
-    if (props.submited) {
-      tasklist();
-      props.setSubmited(!props.submited);
+    if (props.submitted) {
+      tasktaskList();
+      props.setSubmited(!props.submitted);
     }
-  }, [props.submited]);
+  }, [props.submitted]);
 
   useEffect(() => {
-    tasklist();
+    tasktaskList();
   }, []);
 
   return (
     <>
-      <Status {...props} />
+      <h2>Pending</h2>
+      {props.taskList
+        .filter((task) => !task.completed)
+        .map((task) => (
+          <RenderTask {...task} func={handleChange} />
+        ))}
+      <h2>Complete</h2>
+      {props.taskList
+        .filter((task) => task.completed)
+        .map((task) => (
+          <RenderTask {...task} func={handleChange} />
+        ))}
     </>
   );
 }
