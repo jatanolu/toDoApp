@@ -3,10 +3,10 @@ import { FormEvent, useState } from "react";
 import { ITask } from "../src/App";
 
 function Input(props: {
-  submited: boolean;
+  submitted: boolean;
   setSubmited: (Submit: boolean) => void;
-  list: ITask[];
-  setList: (list: ITask[]) => void;
+  taskList: ITask[];
+  setTaskList: (taskList: ITask[]) => void;
 }) {
   const [newTask, setNewTask] = useState<string>("");
 
@@ -26,7 +26,7 @@ function Input(props: {
 
   return (
     <>
-      <p>From the Input component</p>
+      <h2>From the Input component</h2>
       <form id="taskInput" onSubmit={handleSubmit}>
         <input
           onChange={(event) => {

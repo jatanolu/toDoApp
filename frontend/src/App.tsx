@@ -7,11 +7,21 @@ import "./App.css";
 export interface ITask {
   id: number;
   title: string;
+  completed: boolean;
+}
+export interface ItaskList {
+  tasks: ITask[];
+}
+export interface Iprops {
+  submitted: boolean;
+  setSubmited: (Submit: boolean) => void;
+  taskList: ITask[];
+  setTaskList: (taskList: ITask[]) => void;
 }
 
 function App(): JSX.Element {
-  const [list, setList] = useState<ITask[]>([]);
-  const [submited, setSubmited] = useState<boolean>(false);
+  const [taskList, setTaskList] = useState<ITask[]>([]);
+  const [submitted, setSubmited] = useState<boolean>(false);
 
   return (
     <>
@@ -19,15 +29,15 @@ function App(): JSX.Element {
       <h1>Hello world</h1>
       <div className="task-box">
         <Input
-          list={list}
-          setList={setList}
-          submited={submited}
+          taskList={taskList}
+          setTaskList={setTaskList}
+          submitted={submitted}
           setSubmited={setSubmited}
         />
         <Tasks
-          list={list}
-          setList={setList}
-          submited={submited}
+          taskList={taskList}
+          setTaskList={setTaskList}
+          submitted={submitted}
           setSubmited={setSubmited}
         />
       </div>

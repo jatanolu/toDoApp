@@ -1,39 +1,44 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { ITask } from "../src/App";
+import { ItaskList, Iprops } from "../src/App";
+import RenderTask from "./RenderTask";
 
-function Task(props: {
-  submited: boolean;
-  setSubmited: (Submit: boolean) => void;
-  list: ITask[];
-  setList: (list: ITask[]) => void;
-}) {
-  interface Ilist {
-    tasks: ITask[];
-  }
-
-  const tasklist = async () => {
-    let allTasks = await axios.get<Ilist>("getTasks/");
-    props.setList(allTasks.data.tasks);
+function Task(props: Iprops) {
+  const tasktaskList = async () => {
+    let allTasks = await axios.get<ItaskList>("getTasks/");
+    props.setTaskList(allTasks.data.tasks);
   };
-
+  async function handleChange(id: number) {
+    await axios.put<ItaskList>("toggleTaskComplete/", {
+      id: id,
+    });
+    props.setSubmited(!props.submitted);
+  }
   useEffect(() => {
-    if (props.submited) {
-      tasklist();
-      props.setSubmited(!props.submited);
+    if (props.submitted) {
+      tasktaskList();
+      props.setSubmited(!props.submitted);
     }
-  }, [props.submited]);
+  }, [props.submitted]);
 
   useEffect(() => {
-    tasklist();
+    tasktaskList();
   }, []);
 
   return (
     <>
-      <p>From the task component</p>
-      {props.list.map((task) => {
-        return <p>{task.title}</p>;
-      })}
+      <h2>Pending</h2>
+      {props.taskList
+        .filter((task) => !task.completed)
+        .map((task) => (
+          <RenderTask {...task} func={handleChange} />
+        ))}
+      <h2>Complete</h2>
+      {props.taskList
+        .filter((task) => task.completed)
+        .map((task) => (
+          <RenderTask {...task} func={handleChange} />
+        ))}
     </>
   );
 }

@@ -21,3 +21,13 @@ def addTask(request):
     except Exception as e:
         return JsonResponse({'fail': 'Task creation failed'})
     return JsonResponse({'success': True})
+
+@api_view(['PUT'])
+def toggleTaskComplete(request):
+    try:
+        updatedTask = Task.objects.get(id=request.data['id'])
+        updatedTask.completed = not updatedTask.completed
+        updatedTask.save()
+    except Exception as e:
+        return JsonResponse({'fail': 'Task update failed'})
+    return JsonResponse({'success': True})
