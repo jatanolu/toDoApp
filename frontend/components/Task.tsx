@@ -9,7 +9,7 @@ function Task(props: Iprops) {
     props.setTaskList(allTasks.data.tasks);
   };
   async function handleChange(id: number) {
-    await axios.put<ItaskList>("taskToUpdate/", {
+    await axios.put<ItaskList>("toggleTaskComplete/", {
       id: id,
     });
     props.setSubmited(!props.submitted);

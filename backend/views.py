@@ -23,7 +23,7 @@ def addTask(request):
     return JsonResponse({'success': True})
 
 @api_view(['PUT'])
-def taskToUpdate(request):
+def toggleTaskComplete(request):
     try:
         updatedTask = Task.objects.get(id=request.data['id'])
         updatedTask.completed = not updatedTask.completed
